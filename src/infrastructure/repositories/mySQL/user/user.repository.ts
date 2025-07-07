@@ -14,13 +14,39 @@ export class MySQLUserRepository implements IUserRepository {
 
   async getAllUsers(): Promise<User[]> {
     const users = await this.userRepo.find();
-    return users.map(u => new User(u.id, u.name, u.email));
+    return users.map(User.fromPlain);
   }
 
   async findAllActive(): Promise<User[]> {
     const users = await this.userRepo.find({
       where: { isActive: true },
     });
-    return users.map(u => new User(u.id, u.name, u.email));
+    return users.map(User.fromPlain);
+  }
+
+  async save(user: User): Promise<void> {
+    await this.userRepo.save(user as UserORM);
+  }
+
+  async getById(id: string): Promise<User | null> {
+    const user = await this.userRepo.findOne({ where: { id } });
+    if (!user) {
+      return null;
+    }
+    return User.fromPlain(user);
+  }
+
+  async create(user: User): Promise<User> {
+    const userORM = this.userRepo.create(user as UserORM);
+    const savedUser = await this.userRepo.save(userORM);
+    return User.fromPlain(savedUser);
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+      const user = await this.userRepo.findOne({ where: { email } });
+      if (!user) {
+        return null;
+      }
+      return User.fromPlain(user);
   }
 }
