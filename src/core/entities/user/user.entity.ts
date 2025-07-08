@@ -13,19 +13,19 @@ export class User {
     public readonly isActive: boolean = true,
   ) {}
 
-  static fromPlain(plain: any): User {
+  static fromPlain(plain: Partial<User>): User {
     return new User(
-      plain.id,
-      plain.fullname,
-      plain.email,
-      plain.password,
-      plain.role,
-      plain.avatar_link,
-      plain.phone,
-      plain.province,
-      plain.district,
-      plain.detailed_address,
-      plain.isActive,
+      plain.id ?? '',
+      plain.fullname ?? '',
+      plain.email ?? '',
+      plain.password ?? '',
+      plain.role ?? 'customer',
+      plain.avatar_link ?? '',
+      plain.phone ?? '',
+      plain.province ?? '',
+      plain.district ?? '',
+      plain.detailed_address ?? '',
+      plain.isActive ?? true,
     );
   }
 }

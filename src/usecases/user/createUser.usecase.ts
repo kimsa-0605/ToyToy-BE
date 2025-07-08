@@ -1,11 +1,12 @@
 import { CreateUserDto } from '../../presentation/restful/dto/request/user/createUserDto.dto';
+import { v4 as uuidv4 } from 'uuid';
+import * as bcrypt from 'bcrypt';
 import { User } from '../../core/entities/user/user.entity';
 import {
   IUserRepository,
   USER_REPOSITORY,
 } from '../../core/interfaceRepositories/user/user.repository.interface';
 import { Inject, ConflictException } from '@nestjs/common';
-import { UserORM } from 'src/infrastructure/repositories/mySQL/user/user.orm.entity';
 
 export class CreateUserUseCase {
   constructor(
@@ -25,18 +26,21 @@ export class CreateUserUseCase {
       });
     }
 
+    const saltOrRounds = 10;
+    const hashedPassword = await bcrypt.hash(dto.password, saltOrRounds);
+
     const user = new User(
-      "",
+      uuidv4(),
       dto.fullname,
       dto.email,
-      dto.password,
-      'customer',             
-      '',                    
-      '',                   
-      '',                    
-      '',                    
-      '',                   
-      true                  
+      hashedPassword,
+      'customer',
+      '',
+      '',
+      '',
+      '',
+      '',
+      true,
     );
 
     return this.userRepo.create(user);

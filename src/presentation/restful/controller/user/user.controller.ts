@@ -5,6 +5,7 @@ import {
   Post,
   Body,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { GetAllUsersUseCase } from '../../../../usecases/user/getAllUsers.usecase';
 import { GetActiveUsersUseCase } from '../../../../usecases/user/getActiveUsers.usecase';
@@ -13,7 +14,13 @@ import { CreateUserUseCase } from '../../../../usecases/user/createUser.usecase'
 import { CreateUserDto } from '../../dto/request/user/createUserDto.dto';
 import { UserResponseDto } from '../../dto/response/user/userResponseDto.dto';
 import { SuccessResponse } from '../../dto/response/successResponse.dto';
+import { JwtAuthGuard } from '../../../../common/guards/jwt-auth.guard';
+import { Public } from '../../../../common/decorator/public.decorator';
+import { Roles } from '../../../../common/decorator/roles.decorator';
+import { RolesGuard } from '../../../../common/guards/roles.guard';
 
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('admin')
 @Controller('users')
 export class UserController {
   constructor(
@@ -53,6 +60,7 @@ export class UserController {
     return new SuccessResponse('Got user successfully', new UserResponseDto(user));
   }
 
+  @Public()
   @Post()
   async createUser(@Body() dto: CreateUserDto) {
     const user = await this.createUserUseCase.execute(dto);

@@ -5,13 +5,14 @@ import {
   IUserRepository,
   USER_REPOSITORY,
 } from '../core/interfaceRepositories/user/user.repository.interface';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function seedUsers() {
   const app = await NestFactory.createApplicationContext(AppModule);
   const userRepo = app.get<IUserRepository>(USER_REPOSITORY);
 
-  for (const [index, user] of userSeedData.entries()) {
-    const userWithId = { ...user };
+  for (const user of userSeedData) {
+    const userWithId = { ...user, id: uuidv4() };
     await userRepo.save(userWithId as any);
   }
 

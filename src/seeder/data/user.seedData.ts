@@ -2,7 +2,6 @@ import { User } from 'src/core/entities/user/user.entity';
 
 export const userSeedData: Partial<User>[] = [
   {
-    id: '1',
     fullname: 'Admin',
     email: 'admin@gmail.com',
     password: '123456',
@@ -15,7 +14,6 @@ export const userSeedData: Partial<User>[] = [
     isActive: true,
   },
   {
-    id:' 2',
     fullname: 'Tran Thi B',
     email: 'b@gmail.com',
     password: '123456',
