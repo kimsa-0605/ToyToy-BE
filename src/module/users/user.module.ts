@@ -1,3 +1,4 @@
+// 1. Import
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserController } from '../../presentation/restful/controller/user/user.controller';
@@ -9,6 +10,7 @@ import { USER_REPOSITORY } from '../../core/interfaceRepositories/user/user.repo
 import { GetByIdUserUseCase } from '../../usecases/user/getById.usecase';
 import { CreateUserUseCase } from '../../usecases/user/createUser.usecase';
 
+// 2. Define the UserModule
 @Module({
   imports: [TypeOrmModule.forFeature([UserORM])],
   controllers: [UserController],

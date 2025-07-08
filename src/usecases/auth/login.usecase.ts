@@ -1,8 +1,10 @@
+// 1. Import
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { MySQLUserRepository } from '../../infrastructure/repositories/mySQL/user/user.repository';
 import * as bcrypt from 'bcrypt';
 
+// 2. Define LoginUseCase
 @Injectable()
 export class LoginUseCase {
   constructor(
@@ -10,6 +12,7 @@ export class LoginUseCase {
     private readonly jwtService: JwtService,
   ) {}
 
+  // 3. Execute login with email & password
   async execute(email: string, password: string): Promise<string> {
     const user = await this.userRepository.findByEmail(email);
     if (!user) {

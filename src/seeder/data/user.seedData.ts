@@ -1,10 +1,13 @@
+// 1. Import User entity and bcrypt for password hashing
 import { User } from 'src/core/entities/user/user.entity';
+import * as bcrypt from 'bcrypt';
 
+// 2. Define sample users for seeding the database
 export const userSeedData: Partial<User>[] = [
   {
     fullname: 'Admin',
     email: 'admin@gmail.com',
-    password: '123456',
+    password: bcrypt.hashSync('123456', 10), // hash password
     role: 'admin',
     avatar_link: '',
     phone: '0123456789',
@@ -16,7 +19,7 @@ export const userSeedData: Partial<User>[] = [
   {
     fullname: 'Tran Thi B',
     email: 'b@gmail.com',
-    password: '123456',
+    password: bcrypt.hashSync('123456', 10), // hash password
     role: 'customer',
     avatar_link: '',
     phone: '0987654321',

@@ -1,19 +1,24 @@
+// 1. Import
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './module/app.module';
 import { ValidationPipe, BadRequestException } from '@nestjs/common';
 
+// 2. Bootstrap the application
 async function bootstrap() {
+  // 2.1. Create the app instance
   const app = await NestFactory.create(AppModule);
 
+  // 2.2. Set global prefix for all routes 
   app.setGlobalPrefix('api/v1');
 
+  // 2.3. Use global validation pipe for request validation
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-      exceptionFactory: (errors) => {
+      whitelist: true, 
+      forbidNonWhitelisted: true, 
+      transform: true, 
 
+      exceptionFactory: (errors) => {
         return new BadRequestException({
           error: {
             code: 'INVALID_INPUT',
@@ -30,4 +35,5 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT || 3000);
 }
+
 bootstrap();

@@ -1,3 +1,4 @@
+// 1. Import
 import {
   Controller,
   Get,
@@ -19,6 +20,7 @@ import { Public } from '../../../../common/decorator/public.decorator';
 import { Roles } from '../../../../common/decorator/roles.decorator';
 import { RolesGuard } from '../../../../common/guards/roles.guard';
 
+// 2. Apply guards and admin role to whole controller
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('admin')
 @Controller('users')

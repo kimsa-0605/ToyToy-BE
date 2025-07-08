@@ -1,3 +1,4 @@
+// 1. Import
 import { CreateUserDto } from '../../presentation/restful/dto/request/user/createUserDto.dto';
 import { v4 as uuidv4 } from 'uuid';
 import * as bcrypt from 'bcrypt';
@@ -8,11 +9,13 @@ import {
 } from '../../core/interfaceRepositories/user/user.repository.interface';
 import { Inject, ConflictException } from '@nestjs/common';
 
+// 2. Define CreateUserUseCase
 export class CreateUserUseCase {
   constructor(
     @Inject(USER_REPOSITORY) private readonly userRepo: IUserRepository,
   ) {}
 
+  // 3. Create user account
   async execute(dto: CreateUserDto): Promise<User> {
     const existingUser = await this.userRepo.findByEmail(dto.email);
     if (existingUser) {
@@ -30,17 +33,17 @@ export class CreateUserUseCase {
     const hashedPassword = await bcrypt.hash(dto.password, saltOrRounds);
 
     const user = new User(
-      uuidv4(),
+      uuidv4(),          
       dto.fullname,
       dto.email,
       hashedPassword,
-      'customer',
+      'customer',         
       '',
       '',
       '',
       '',
       '',
-      true,
+      true,               
     );
 
     return this.userRepo.create(user);
