@@ -7,7 +7,7 @@ import { GetActiveUsersUseCase } from '../../usecases/user/getActiveUsers.usecas
 import { UserORM } from '../../infrastructure/repositories/mySQL/user/user.orm.entity';
 import { MySQLUserRepository } from '../../infrastructure/repositories/mySQL/user/user.repository';
 import { USER_REPOSITORY } from '../../core/interfaceRepositories/user/user.repository.interface';
-import { GetByIdUserUseCase } from '../../usecases/user/getById.usecase';
+import { GetByIdUseCase } from '../../usecases/user/getById.usecase';
 import { CreateUserUseCase } from '../../usecases/user/createUser.usecase';
 
 // 2. Define the UserModule
@@ -17,7 +17,7 @@ import { CreateUserUseCase } from '../../usecases/user/createUser.usecase';
   providers: [
     GetAllUsersUseCase,
     GetActiveUsersUseCase,
-    GetByIdUserUseCase,
+    GetByIdUseCase,
     CreateUserUseCase,
     {
       provide: USER_REPOSITORY,

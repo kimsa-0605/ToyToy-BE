@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { GetAllUsersUseCase } from '../../../../usecases/user/getAllUsers.usecase';
 import { GetActiveUsersUseCase } from '../../../../usecases/user/getActiveUsers.usecase';
-import { GetByIdUserUseCase } from '../../../../usecases/user/getById.usecase';
+import { GetByIdUseCase } from '../../../../usecases/user/getById.usecase';
 import { CreateUserUseCase } from '../../../../usecases/user/createUser.usecase';
 import { CreateUserDto } from '../../dto/request/user/createUserDto.dto';
 import { UserResponseDto } from '../../dto/response/user/userResponseDto.dto';
@@ -28,7 +28,7 @@ export class UserController {
   constructor(
     private readonly getAllUsersUseCase: GetAllUsersUseCase,
     private readonly getActiveUsersUseCase: GetActiveUsersUseCase,
-    private readonly getByIdUserUseCase: GetByIdUserUseCase,
+    private readonly getByIdUseCase: GetByIdUseCase,
     private readonly createUserUseCase: CreateUserUseCase,
   ) {}
 
@@ -48,7 +48,7 @@ export class UserController {
 
   @Get(':id')
   async getUserById(@Param('id') id: string) {
-    const user = await this.getByIdUserUseCase.execute(id);
+    const user = await this.getByIdUseCase.execute(id);
     if (!user) {
       throw new NotFoundException({
         code: 'USER_NOT_FOUND',

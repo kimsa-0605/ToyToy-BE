@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './users/user.module'; 
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ProductModule } from './product/product.module';
 
 // 2. Define AppModule
 @Module({
@@ -30,6 +31,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     // 2.3. Import feature modules
     UserModule,
     AuthModule,
+    ProductModule
   ],
 })
 export class AppModule {}

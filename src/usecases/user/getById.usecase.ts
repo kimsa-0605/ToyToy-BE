@@ -7,7 +7,7 @@ import {
 } from '../../core/interfaceRepositories/user/user.repository.interface';
 
 // 2. Define use case to get user by ID
-export class GetByIdUserUseCase {
+export class GetByIdUseCase {
   constructor(
     @Inject(USER_REPOSITORY) private readonly userRepo: IUserRepository,
   ) {}

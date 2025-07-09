@@ -9,21 +9,25 @@ import { ProductORM } from './product.orm.entity';
 // 2. Implement the MySQL repository using TypeORM
 @Injectable()
 export class MySQLProductRepository implements IProductRepository {
-    constructor(
-        @InjectRepository(ProductORM)
-        private readonly productRepo: Repository<ProductORM>,
-    ) {}
+  constructor(
+      @InjectRepository(ProductORM)
+      private readonly productRepo: Repository<ProductORM>,
+  ) {}
 
-    async getAllProducts(): Promise<Product[]> {
-        const products = await this.productRepo.find();
-        return products.map(Product.fromPlain);
+  async getAllProducts(): Promise<Product[]> {
+      const products = await this.productRepo.find();
+      return products.map(Product.fromPlain);
+  }
+
+  async getById(id: number): Promise<Product | null> {
+      const product = await this.productRepo.findOne({ where: { id } });
+      if (!product) {
+        return null;
+      }
+      return Product.fromPlain(product);
     }
 
-    async getById(id: number): Promise<Product | null> {
-        const product = await this.productRepo.findOne({ where: { id } });
-        if (!product) {
-          return null;
-        }
-        return Product.fromPlain(product);
-      }
+  async save(product: Product): Promise<void> {
+    await this.productRepo.save(product as ProductORM)
+  }
 }
