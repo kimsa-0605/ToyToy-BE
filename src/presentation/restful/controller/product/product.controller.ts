@@ -3,15 +3,17 @@ import {
   Controller,
   Get,
   Param,
-  NotFoundException,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { GetAllProductsUseCase } from '../../../../usecases/product/getAllProducts.usecase';
 import { GetByIdUseCase } from '../../../../usecases/product/getById.usecase';
+import { GetByCategoryUseCase } from 'src/usecases/product/getByCategory.usecase';
 import { ProductResponseDto } from '../../dto/response/product/productResponseDto.dto';
 import { SuccessResponse } from '../../dto/response/successResponse.dto';
 import { JwtAuthGuard } from '../../../../common/guards/jwt-auth.guard';
 import { Public } from '../../../../common/decorator/public.decorator';
+import { Category } from '../../../../core/entities/product/category.enum';
 
 // 2. Apply guards to whole controller
 @UseGuards(JwtAuthGuard)
@@ -20,7 +22,8 @@ import { Public } from '../../../../common/decorator/public.decorator';
 export class ProductController {
     constructor(
         private readonly getAllProductsUseCase: GetAllProductsUseCase,
-        private readonly getByIdUseCase: GetByIdUseCase
+        private readonly getByIdUseCase: GetByIdUseCase,
+        private readonly getByCategoryUseCase: GetByCategoryUseCase
     ) {}
 
     @Get()
@@ -31,18 +34,16 @@ export class ProductController {
     }
 
     @Get(':id')
-    async getById(@Param('id') id: number) {
+    async getById(@Param('id', ParseIntPipe) id: number) {
         const product = await this.getByIdUseCase.execute(id);
-        if (!product) {
-            throw new NotFoundException ({
-                code: 'PRODUCT_NOT_FOUND',
-                message: 'Product not found',
-                details: [{ 
-                field: 'productId', 
-                issue: 'Product does not exist' 
-                }],
-            })
-        }
         return new SuccessResponse('Got product successfully', new ProductResponseDto(product));
     }
+
+    @Get('category/:category')
+    async getByCategory(@Param('category') categoryParam: string) {
+        const products = await this.getByCategoryUseCase.execute(categoryParam);
+        const data = products.map((product) => new ProductResponseDto(product));
+        return new SuccessResponse('Got products by category', { products: data });
+    }
+
 }

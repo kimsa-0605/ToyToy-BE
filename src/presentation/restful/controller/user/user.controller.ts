@@ -49,16 +49,6 @@ export class UserController {
   @Get(':id')
   async getUserById(@Param('id') id: string) {
     const user = await this.getByIdUseCase.execute(id);
-    if (!user) {
-      throw new NotFoundException({
-        code: 'USER_NOT_FOUND',
-        message: 'User not found',
-        details: [{ 
-          field: 'userId', 
-          issue: 'User does not exist' 
-        }],
-      });
-    }
     return new SuccessResponse('Got user successfully', new UserResponseDto(user));
   }
 

@@ -5,6 +5,7 @@ import { Product } from '../../../../core/entities/product/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductORM } from './product.orm.entity'; 
+import { Category } from 'src/core/entities/product/category.enum';
 
 // 2. Implement the MySQL repository using TypeORM
 @Injectable()
@@ -29,5 +30,9 @@ export class MySQLProductRepository implements IProductRepository {
 
   async save(product: Product): Promise<void> {
     await this.productRepo.save(product as ProductORM)
+  }
+
+  async getByCategory(category: Category): Promise<Product[] | null> {
+    return await this.productRepo.find({where: {category}})
   }
 }

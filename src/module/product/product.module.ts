@@ -7,6 +7,7 @@ import { ProductORM } from '../../infrastructure/repositories/mySQL/product/prod
 import { MySQLProductRepository } from '../../infrastructure/repositories/mySQL/product/product.repository';
 import { PRODUCT_REPOSITORY } from '../../core/interfaceRepositories/product/product.repository.interface';
 import { GetByIdUseCase } from '../../usecases/product/getById.usecase';
+import { GetByCategoryUseCase } from '../../usecases/product/getByCategory.usecase';
 
 // 2. Define the ProductModule
 @Module({
@@ -15,6 +16,7 @@ import { GetByIdUseCase } from '../../usecases/product/getById.usecase';
   providers: [
     GetAllProductsUseCase,
     GetByIdUseCase,
+    GetByCategoryUseCase,
     {
       provide: PRODUCT_REPOSITORY,
       useClass: MySQLProductRepository,

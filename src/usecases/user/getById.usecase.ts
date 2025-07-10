@@ -1,6 +1,6 @@
 // 1. Import
 import { User } from '../../core/entities/user/user.entity';
-import { Inject } from '@nestjs/common';
+import { Inject, NotFoundException } from '@nestjs/common';
 import {
   USER_REPOSITORY,
   IUserRepository,
@@ -13,7 +13,18 @@ export class GetByIdUseCase {
   ) {}
 
   // 2.1. Execute logic to find a user by ID
-  async execute(id: string): Promise<User | null> {
-    return await this.userRepo.getById(id); 
+  async execute(id: string): Promise<User> {
+    const user = await this.userRepo.getById(id);
+    if (!user) {
+      throw new NotFoundException({
+        code: 'USER_NOT_FOUND',
+        message: 'User not found',
+        details: [{ 
+          field: 'userId', 
+          issue: 'User does not exist' 
+        }],
+      });
+    }
+    return user;
   }
 }

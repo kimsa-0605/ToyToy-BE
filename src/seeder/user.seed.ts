@@ -15,7 +15,7 @@ export async function seedUsers() {
   const userRepo = app.get<IUserRepository>(USER_REPOSITORY);
 
   for (const user of userSeedData) {
-    const userWithId = { ...user, id: uuidv4() }; 
+    const userWithId = { ...user, id: uuidv4() };
     await userRepo.save(userWithId as any);
   }
 

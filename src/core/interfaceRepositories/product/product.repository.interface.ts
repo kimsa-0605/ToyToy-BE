@@ -1,4 +1,5 @@
 // 1. Import
+import { Category } from "../../../core/entities/product/category.enum";
 import { Product } from "../../entities/product/product.entity";
 
 // 2. Declare a constant token for Dependency Injection
@@ -11,4 +12,6 @@ export interface IProductRepository {
     getById(id: number): Promise<Product | null>;
 
     save(product: Product): Promise<void>;
+
+    getByCategory(category: Category): Promise<Product[] | null>;
 }
