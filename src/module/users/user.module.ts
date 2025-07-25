@@ -9,6 +9,7 @@ import { MySQLUserRepository } from '../../infrastructure/repositories/mySQL/use
 import { USER_REPOSITORY } from '../../core/interfaceRepositories/user/user.repository.interface';
 import { GetByIdUseCase } from '../../usecases/user/getById.usecase';
 import { CreateUserUseCase } from '../../usecases/user/createUser.usecase';
+import { GetByEmailUseCase } from '../../usecases/user/getByEmail.usecase';
 
 // 2. Define the UserModule
 @Module({
@@ -19,6 +20,7 @@ import { CreateUserUseCase } from '../../usecases/user/createUser.usecase';
     GetActiveUsersUseCase,
     GetByIdUseCase,
     CreateUserUseCase,
+    GetByEmailUseCase,
     {
       provide: USER_REPOSITORY,
       useClass: MySQLUserRepository,

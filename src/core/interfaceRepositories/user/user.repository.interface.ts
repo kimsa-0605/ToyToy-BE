@@ -1,4 +1,4 @@
-// 1. Import 
+// 1. Import
 import { User } from '../../entities/user/user.entity';
 
 // 2. Declare a constant token for Dependency Injection
@@ -16,5 +16,5 @@ export interface IUserRepository {
 
   create(user: User): Promise<User>;
 
-  findByEmail(email: string): Promise<User | null>;
+  getByEmail(email: string): Promise<User | null>;
 }

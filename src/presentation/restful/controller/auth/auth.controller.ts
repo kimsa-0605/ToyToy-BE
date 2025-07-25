@@ -11,7 +11,10 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() loginDto: LoginDto): Promise<LoginResponseDto> {
-    const token = await this.loginUseCase.execute(loginDto.email, loginDto.password);
+    const token = await this.loginUseCase.execute(
+      loginDto.email,
+      loginDto.password,
+    );
     return new LoginResponseDto(token);
   }
 }

@@ -12,6 +12,7 @@ import { GetAllUsersUseCase } from '../../../../usecases/user/getAllUsers.usecas
 import { GetActiveUsersUseCase } from '../../../../usecases/user/getActiveUsers.usecase';
 import { GetByIdUseCase } from '../../../../usecases/user/getById.usecase';
 import { CreateUserUseCase } from '../../../../usecases/user/createUser.usecase';
+import { GetByEmailUseCase } from '../../../../usecases/user/getByEmail.usecase';
 import { CreateUserDto } from '../../dto/request/user/createUserDto.dto';
 import { UserResponseDto } from '../../dto/response/user/userResponseDto.dto';
 import { SuccessResponse } from '../../dto/response/successResponse.dto';
@@ -30,6 +31,7 @@ export class UserController {
     private readonly getActiveUsersUseCase: GetActiveUsersUseCase,
     private readonly getByIdUseCase: GetByIdUseCase,
     private readonly createUserUseCase: CreateUserUseCase,
+    private readonly getByEmailUseCase: GetByEmailUseCase,
   ) {}
 
   @Get()
@@ -43,13 +45,28 @@ export class UserController {
   async getActiveUsers() {
     const users = await this.getActiveUsersUseCase.execute();
     const data = users.map((user) => new UserResponseDto(user));
-    return new SuccessResponse('Got active users successfully', { users: data });
+    return new SuccessResponse('Got active users successfully', {
+      users: data,
+    });
   }
 
   @Get(':id')
   async getUserById(@Param('id') id: string) {
     const user = await this.getByIdUseCase.execute(id);
-    return new SuccessResponse('Got user successfully', new UserResponseDto(user));
+    return new SuccessResponse(
+      'Got user successfully',
+      new UserResponseDto(user),
+    );
+  }
+
+  @Public()
+  @Get('email/:email')
+  async getByEmail(@Param('email') email: string) {
+    const user = await this.getByEmailUseCase.execute(email);
+    return new SuccessResponse(
+      'Got user successfully',
+      new UserResponseDto(user),
+    );
   }
 
   @Public()

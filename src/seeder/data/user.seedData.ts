@@ -9,7 +9,8 @@ export const userSeedData: Partial<User>[] = [
     email: 'admin@gmail.com',
     password: bcrypt.hashSync('123456', 10), // hash password
     role: 'admin',
-    avatar_link: '',
+    avatar_link:
+      'https://i.pinimg.com/1200x/be/1c/a7/be1ca7a02034c6086c5a1d6bc292da7c.jpg',
     phone: '0123456789',
     province: 'HCM',
     district: '1',
@@ -21,7 +22,8 @@ export const userSeedData: Partial<User>[] = [
     email: 'b@gmail.com',
     password: bcrypt.hashSync('123456', 10), // hash password
     role: 'customer',
-    avatar_link: '',
+    avatar_link:
+      'https://i.pinimg.com/1200x/8a/bd/4d/8abd4db1785d77da090ab7bb2357d3cb.jpg',
     phone: '0987654321',
     province: 'Hanoi',
     district: 'Ba Dinh',

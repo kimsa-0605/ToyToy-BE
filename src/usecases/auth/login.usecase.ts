@@ -14,7 +14,7 @@ export class LoginUseCase {
 
   // 3. Execute login with email & password
   async execute(email: string, password: string): Promise<string> {
-    const user = await this.userRepository.findByEmail(email);
+    const user = await this.userRepository.getByEmail(email);
     if (!user) {
       throw new UnauthorizedException('Invalid email or password');
     }

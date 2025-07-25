@@ -1,19 +1,20 @@
 // 1. Import
-import { Product } from "../../core/entities/product/product.entity";
-import { Inject } from "@nestjs/common";
+import { Product } from '../../core/entities/product/product.entity';
+import { Inject } from '@nestjs/common';
 import {
-    PRODUCT_REPOSITORY,
-    IProductRepository,
-} from "../../core/interfaceRepositories/product/product.repository.interface";
+  PRODUCT_REPOSITORY,
+  IProductRepository,
+} from '../../core/interfaceRepositories/product/product.repository.interface';
 
-// 2. Define use case to get all products
+// 2. Define usecase to get all products
 export class GetAllProductsUseCase {
-    constructor(
-        @Inject(PRODUCT_REPOSITORY) private readonly productRepo: IProductRepository,
-    ) {}
+  constructor(
+    @Inject(PRODUCT_REPOSITORY)
+    private readonly productRepo: IProductRepository,
+  ) {}
 
-    // 2.1. Execute logic to return all products
-    async execute(): Promise<Product[]> {
-        return await this.productRepo.getAllProducts();
-    }
+  // 2.1. Execute logic to return all products
+  async execute(): Promise<Product[]> {
+    return await this.productRepo.getAllProducts();
+  }
 }

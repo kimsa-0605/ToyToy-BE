@@ -17,7 +17,7 @@ export class CreateUserUseCase {
 
   // 3. Create user account
   async execute(dto: CreateUserDto): Promise<User> {
-    const existingUser = await this.userRepo.findByEmail(dto.email);
+    const existingUser = await this.userRepo.getByEmail(dto.email);
     if (existingUser) {
       throw new ConflictException({
         code: 'EMAIL_ALREADY_EXISTS',
