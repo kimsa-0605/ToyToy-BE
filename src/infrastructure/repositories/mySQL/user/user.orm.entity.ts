@@ -1,4 +1,6 @@
-import { Entity, PrimaryColumn, Column } from 'typeorm';
+
+import { CartItemORM } from '../cart_item/cart_item.orm.entity';
+import { Entity, PrimaryColumn, Column, OneToMany } from 'typeorm';
 
 @Entity('users')
 export class UserORM {
@@ -34,4 +36,7 @@ export class UserORM {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @OneToMany(() => CartItemORM, (cartItem) => cartItem.user)
+  cartItems: CartItemORM[];
 }

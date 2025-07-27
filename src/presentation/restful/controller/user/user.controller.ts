@@ -5,7 +5,6 @@ import {
   Param,
   Post,
   Body,
-  NotFoundException,
   UseGuards,
 } from '@nestjs/common';
 import { GetAllUsersUseCase } from '../../../../usecases/user/getAllUsers.usecase';
