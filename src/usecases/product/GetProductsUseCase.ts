@@ -1,5 +1,0 @@
-// // getProductsUserCase{
-//     getAll()
-//     getById()
-//      getByName()
-// }
