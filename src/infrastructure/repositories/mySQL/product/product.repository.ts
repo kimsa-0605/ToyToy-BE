@@ -5,7 +5,7 @@ import { Product } from '../../../../core/entities/product/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductORM } from './product.orm.entity'; 
-import { Category } from 'src/core/entities/product/category.enum';
+import { Category } from '../../../../core/entities/product/category.enum';
 
 // 2. Implement the MySQL repository using TypeORM
 @Injectable()

@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ProductModule } from './product/product.module';
 import { DatabaseInitService } from '../infrastructure/externalService/database/database-init.service';
+import { CartItemModule } from './cart_item/cart_item.module';
 
 // 2. Define AppModule
 @Module({
@@ -33,6 +34,7 @@ import { DatabaseInitService } from '../infrastructure/externalService/database/
     UserModule,
     AuthModule,
     ProductModule,
+    CartItemModule
   ],
 
   providers: [DatabaseInitService],

@@ -5,6 +5,7 @@ import { User } from '../../../../core/entities/user/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserORM } from './user.orm.entity';
+import { NotFoundException } from '@nestjs/common';
 
 // 2. Implement the MySQL repository using TypeORM
 @Injectable()
@@ -50,5 +51,20 @@ export class MySQLUserRepository implements IUserRepository {
       return null;
     }
     return User.fromPlain(user);
+  }
+
+  async updateById(id: string, partialUser: Partial<User>): Promise<User> {
+    await this.userRepo.update(id, partialUser);
+
+    const updatedUser = await this.userRepo.findOneBy({ id });
+    if (!updatedUser) {
+      throw new NotFoundException('User not found');
+    }
+
+    return updatedUser;
+  }
+  
+  async changePassword(id: string, newPassword: string): Promise<void> {
+    await this.userRepo.update(id, { password: newPassword });
   }
 }

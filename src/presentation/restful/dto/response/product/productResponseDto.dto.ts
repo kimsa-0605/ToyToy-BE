@@ -12,7 +12,7 @@ export class ProductResponseDto {
   quantity: number;
 
   constructor(product: Product) {
-    this.id = product.id;
+    this.id = product.id ?? 0;
     this.product_name = product.product_name;
     this.price = product.price;
     this.image_link = product.image_link;

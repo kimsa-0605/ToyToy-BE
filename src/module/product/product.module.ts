@@ -22,5 +22,6 @@ import { GetByCategoryUseCase } from '../../usecases/product/getByCategory.useca
       useClass: MySQLProductRepository,
     },
   ],
+  exports: [PRODUCT_REPOSITORY],
 })
 export class ProductModule {}
