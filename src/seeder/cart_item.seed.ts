@@ -17,18 +17,14 @@ export async function seedCartItem() {
   const dataSource = app.get(DataSource);
   const cartItems = await CartItemSeedData(dataSource);
 
-for (const cartItem of cartItems) {
-  await cartItemRepo.save({
-    id: cartItem.id ?? 0,
-    product_id: cartItem.product_id ?? 0,
-    product_name: cartItem.product_name ?? '',
-    price: cartItem.price ?? 0,
-    product_image_link: cartItem.product_image_link ?? '',
-    status: cartItem.status ?? 'active',
-    user_id: String(cartItem.user_id ?? 0),
-    quantity: cartItem.quantity ?? 0,
-  });
-}
-
+  for (const cartItem of cartItems) {
+    await cartItemRepo.save({
+      id: cartItem.id ?? 0,
+      product_id: cartItem.product_id ?? 0,
+      status: cartItem.status ?? 'active',
+      user_id: String(cartItem.user_id ?? 0),
+      quantity: cartItem.quantity ?? 0,
+    });
+  }
   await app.close();
 }

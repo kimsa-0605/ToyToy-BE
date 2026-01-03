@@ -14,16 +14,7 @@ export class CartItemORM {
   id: number;
 
   @Column()
-  product_name: string;
-
-  @Column()
-  price: number;
-
-  @Column()
   quantity: number;
-
-  @Column()
-  product_image_link: string;
 
   @Column({ default: 'active' })
   status: 'active' | 'out_of_stock';

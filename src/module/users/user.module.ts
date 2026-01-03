@@ -10,6 +10,8 @@ import { USER_REPOSITORY } from '../../core/interfaceRepositories/user/user.repo
 import { GetByIdUseCase } from '../../usecases/user/getById.usecase';
 import { CreateUserUseCase } from '../../usecases/user/createUser.usecase';
 import { GetByEmailUseCase } from '../../usecases/user/getByEmail.usecase';
+import { UpdateUserUseCase } from '../../usecases/user/updateById.usecase';
+import { ChangePasswordUseCase } from '../../usecases/user/changePassword.usecase';
 
 // 2. Define the UserModule
 @Module({
@@ -21,6 +23,8 @@ import { GetByEmailUseCase } from '../../usecases/user/getByEmail.usecase';
     GetByIdUseCase,
     CreateUserUseCase,
     GetByEmailUseCase,
+    UpdateUserUseCase,
+    ChangePasswordUseCase,
     {
       provide: USER_REPOSITORY,
       useClass: MySQLUserRepository,

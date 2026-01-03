@@ -1,27 +1,32 @@
-// 1. Define User entity (used in core domain logic)
 export class CartItem {
-  constructor(
-    public readonly id: number,
-    public readonly product_name: string,
-    public readonly price: number,
-    public readonly product_id: number,
-    public readonly product_image_link: string,
-    public readonly user_id: string,
-    public readonly quantity: number,
-    public readonly status: string,
-  ) {}
+  id: number;
+  product_id: number;
+  user_id: string;
+  quantity: number;
+  status: string;
 
-  // 2. Create a User object from a plain JS object
-  static fromPlain(plain: Partial<CartItem>): CartItem {
-    return new CartItem(
-      plain.id ?? 0,
-      plain.product_name ?? '',
-      plain.price ?? 0,
-      plain.product_id ?? 0,
-      plain.product_image_link ?? '',
-      plain.user_id ?? '',
-      plain.quantity ?? 1,
-      plain.status ?? 'active',
-    );
+  product?: {
+    id: number;
+    product_name: string;
+    price: number;
+    image_link: string;
+    quantity: number;
+  };
+
+  static fromPlain(plain: any): CartItem {
+    return {
+      id: plain.id,
+      product_id: plain.product_id,
+      user_id: plain.user_id,
+      quantity: plain.quantity,
+      status: plain.status,
+      product: plain.product ? {
+        id: plain.product.id,
+        product_name: plain.product.product_name,
+        price: plain.product.price,
+        image_link: plain.product.image_link,
+        quantity: plain.product.quantity,
+      } : undefined,
+    };
   }
 }

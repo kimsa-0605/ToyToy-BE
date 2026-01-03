@@ -17,4 +17,8 @@ export interface IUserRepository {
   create(user: User): Promise<User>;
 
   getByEmail(email: string): Promise<User | null>;
+
+  updateById(id: string, user: Partial<User>): Promise<User>;
+
+  changePassword(id: string, newPassword: string): Promise<void>;
 }

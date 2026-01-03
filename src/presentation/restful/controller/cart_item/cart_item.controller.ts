@@ -16,6 +16,7 @@ import { GetCartItemUseCase } from '../../../../usecases/cart_item/getCartItemsB
 import { RemoveByUserIdUseCase } from '../../../../usecases/cart_item/removeByUserId.usecase';
 import { UpdateCartItemUseCase } from '../../../../usecases/cart_item/updateCart.usecase';
 import { CartItemResponseDto } from '../../dto/response/cart_item/cartItemResponseDto.dto';
+import { AddToCartItemResponseDto } from '../../dto/response/cart_item/addToCartItemResponseDto.dto';
 import { SuccessResponse } from '../../dto/response/successResponse.dto';
 import { AddToCartDto } from '../../dto/request/cart_item/addTocartDto.dto';
 import { UpdateCartItemDto } from '../../dto/request/cart_item/updateCartItemDto.dto';
@@ -49,7 +50,7 @@ export class CartItemController {
   async addToCart(@Body() dto: AddToCartDto, @Request() req) {
     const userId = req.user.userId;
     const cartItem = await this.addToCartUseCase.execute(userId, dto.product_id, dto.quantity);
-    const data = new CartItemResponseDto(cartItem);
+    const data = new AddToCartItemResponseDto(cartItem);
     return new SuccessResponse('Product added to cart successfully', { cartItem: data });
   }
 

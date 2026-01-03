@@ -18,34 +18,24 @@ export class UpdateCartItemUseCase {
         private readonly productRepo: IProductRepository,
     ) {}
 
-    async execute(user_id: string, product_id: number, quantityToAdd: number): Promise<CartItem> {
-        if (quantityToAdd < 1) {
-            throw new BadRequestException('Quantity to add must be at least 1');
-        }
-
+    async execute(user_id: string, product_id: number, requestedQuantity: number): Promise<CartItem> {
         const product = await this.productRepo.getById(product_id);
+
         if (!product) {
             throw new NotFoundException('Product not found');
         }
 
         const availableStock = product.quantity;
-        if (availableStock <= 0) {
-            throw new BadRequestException('Product is out of stock');
-        }
+
+        let finalQuantity = requestedQuantity;
+        if (finalQuantity < 1) finalQuantity = 1;
+        
+        if (finalQuantity > availableStock) finalQuantity = availableStock;
 
         const cartItems = await this.cartItemRepo.getCartItemsByUser(user_id);
         const existingCartItem = cartItems.find(
             (item) => item.product_id === product_id && item.status === 'active',
         );
-
-        const finalQuantity = Math.min(
-            (existingCartItem ? existingCartItem.quantity : 0) + quantityToAdd,
-            availableStock,
-        );
-
-        if (finalQuantity < 1) {
-            throw new BadRequestException('Not enough stock available');
-        }
 
         if (existingCartItem) {
             if (finalQuantity === existingCartItem.quantity) {
@@ -58,11 +48,11 @@ export class UpdateCartItemUseCase {
             }
             return updatedItem;
         }
-
         const newItem = await this.cartItemRepo.addToCart(user_id, product_id, finalQuantity);
         if (!newItem) {
             throw new NotFoundException('Failed to add cart item');
         }
+
         return newItem;
     }
 }
